@@ -28,8 +28,19 @@ async function run() {
 
     const toyCollection = client.db('turboSporty').collection('toys');
 
+    /*     app.get('/toys', async (req, res) => {
+          const cursor = toyCollection.find()
+          const result = await cursor.toArray();
+          res.send(result);
+        }) */
+
     app.get('/toys', async (req, res) => {
-      const cursor = toyCollection.find()
+      let query = {};
+      if (req.query?.seller_email) {
+        query = { seller_email: req.query.seller_email }
+      }
+      const sort = req.query?.sort ? parseInt(req.query.sort) : 1; // Default to ascending order
+      const cursor = toyCollection.find(query).sort({ price: sort });
       const result = await cursor.toArray();
       res.send(result);
     })
@@ -46,7 +57,7 @@ async function run() {
       const result = await toyCollection.insertOne(toys);
       res.send(result);
     })
-    
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
