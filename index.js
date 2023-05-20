@@ -28,12 +28,6 @@ async function run() {
 
     const toyCollection = client.db('turboSporty').collection('toys');
 
-    /*     app.get('/toys', async (req, res) => {
-          const cursor = toyCollection.find()
-          const result = await cursor.toArray();
-          res.send(result);
-        }) */
-
     app.get('/toys', async (req, res) => {
       let query = {};
       if (req.query?.seller_email) {
@@ -55,6 +49,13 @@ async function run() {
     app.post('/toys', async (req, res) => {
       const toys = req.body;
       const result = await toyCollection.insertOne(toys);
+      res.send(result);
+    })
+
+    app.delete('/toys/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await toyCollection.deleteOne(query);
       res.send(result);
     })
 
