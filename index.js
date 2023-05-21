@@ -93,3 +93,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Turbo Sporty Toy is running on port ${port}`)
 })
+
+module.exports = app;
