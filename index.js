@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const toyCollection = client.db('turboSporty').collection('toys');
 
@@ -93,5 +93,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Turbo Sporty Toy is running on port ${port}`)
 })
-
-module.exports = app;
